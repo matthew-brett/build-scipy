@@ -1,0 +1,21 @@
+--- distutils/fcompiler/gnu.py.old	2017-07-13 00:26:25.000000000 +0100
++++ distutils/fcompiler/gnu.py	2017-07-13 00:30:18.000000000 +0100
+@@ -333,17 +333,7 @@
+         if sys.platform == 'win32':
+             c_compiler = self.c_compiler
+             if c_compiler and c_compiler.compiler_type == "msvc":
+-                if "gcc" in opt:
+-                    i = opt.index("gcc")
+-                    opt.insert(i+1, "mingwex")
+-                    opt.insert(i+1, "mingw32")
+-            # XXX: fix this mess, does not work for mingw
+-            if is_win64():
+-                c_compiler = self.c_compiler
+-                if c_compiler and c_compiler.compiler_type == "msvc":
+-                    return []
+-                else:
+-                    pass
++                return []
+         return opt
+ 
+     def get_target(self):

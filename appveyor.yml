@@ -49,6 +49,9 @@ install:
   - python -m pip install --upgrade pip
   # OpenBLAS numpy wheels
   - pip install --no-index -f %OPENBLAS_WHEEL_URL% numpy
+  # Patch numpy distutils
+  - bash patch_numpy.sh
+
   - pip install delocate cython
 
   # Pin wheel to 0.26 to avoid Windows ABI tag for built wheel
