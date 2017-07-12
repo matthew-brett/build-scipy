@@ -1,0 +1,79 @@
+# vim ft=yaml
+
+os: Visual Studio 2015
+
+environment:
+    global:
+      SCIPY_COMMIT: master
+      OPENBLAS_COMMIT: v0.2.19
+      OPENBLAS_ROOT: c:\opt
+      WHEELHOUSE_UPLOADER_USERNAME: travis-worker
+      # This the key for matthew-brett
+      WHEELHOUSE_UPLOADER_SECRET:
+        secure: 9s0gdDGnNnTt7hvyNpn0/ZzOMGPdwPp2SewFTfGzYk7uI+rdAN9rFq2D1gAP4NQh
+
+    matrix:
+
+    - PYTHON: C:\Python27
+      NP_VER: 1.10.4
+    # - PYTHON: C:\Python27-x64
+    # - PYTHON: C:\Python34
+    # - PYTHON: C:\Python34-x64
+    # - PYTHON: C:\Python35
+    # - PYTHON: C:\Python35-x64
+    # - PYTHON: C:\Python36
+    # - PYTHON: C:\Python36-x64
+
+install:
+  # Get Python bitness
+  # https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-variable-from-command-output#4509885
+  - set PY_CMD=%PYTHON%\Python.exe -c "import platform; print(platform.architecture()[0][:2])"
+  - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
+
+  # Fix MSVC builds for 64-bit Python
+  # See
+  # http://stackoverflow.com/questions/32091593/cannot-install-windows-sdk-7-1-on-windows-10
+  - echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64/vcvars64.bat"
+
+  # Install mingwpy into matching bitness Python 2.7, patch, put on PATH
+  - install_mingwpy.bat
+
+  # Put the building Python on the path
+  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+
+  # Download built openblas libraries
+  - cmd /c unpack_openblas.bat
+
+  # The normal scipy build
+  - python -m pip install --upgrade pip
+  - pip install delocate cython numpy==%NP_VER%
+  # Pin wheel to 0.26 to avoid Windows ABI tag for built wheel
+  - pip install wheel==0.26
+  - git clone https://github.com/scipy/scipy.git
+
+build_script:
+  # Build and install the wheel
+  - cd scipy
+  - git checkout %SCIPY_COMMIT%
+  - python ..\build_scipy.py . %PYTHON_ARCH% %OPENBLAS_ROOT%
+  - cd dist
+  - pip install --pre --no-index -f . scipy
+  - pip install nose
+  # Delete the original libraries to check import of vendored libs
+  - rmdir /s /q %OPENBLAS_ROOT%\%PYTHON_ARCH%
+
+test_script:
+  # Run the project tests
+  - python -c "import scipy; scipy.test(verbose=3)"
+  - cd ..
+
+artifacts:
+  - path: scipy\dist\*.*
+
+on_success:
+  # Upload the generated wheel package to Rackspace
+  # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
+  # disable the ssl checks.
+  - pip install wheelhouse-uploader
+  - python -m wheelhouse_uploader upload --no-ssl-check --local-folder=dist
+    mingwpy-wheels
