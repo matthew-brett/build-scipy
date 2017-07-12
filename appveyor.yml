@@ -7,6 +7,7 @@ environment:
       SCIPY_COMMIT: master
       OPENBLAS_COMMIT: v0.2.19
       OPENBLAS_ROOT: c:\opt
+      OPENBLAS_WHEEL_URL: https://6faba06bebdc7f28a358-9ba0e05766e4bd68e53ad28ecdbfcaa7.ssl.cf2.rackcdn.com
       WHEELHOUSE_UPLOADER_USERNAME: travis-worker
       # This the key for matthew-brett
       WHEELHOUSE_UPLOADER_SECRET:
@@ -46,7 +47,10 @@ install:
 
   # The normal scipy build
   - python -m pip install --upgrade pip
-  - pip install delocate cython numpy==%NP_VER%
+  # OpenBLAS numpy wheels
+  - pip install --no-index -f %OPENBLAS_WHEEL_URL% numpy
+  - pip install delocate cython
+
   # Pin wheel to 0.26 to avoid Windows ABI tag for built wheel
   - pip install wheel==0.26
   - git clone https://github.com/scipy/scipy.git
