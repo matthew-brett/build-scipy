@@ -3,9 +3,6 @@ REM Needs:
 REM   SCIPY_COMMIT
 REM   PYTHON_ARCH
 REM   OPENBLAS_ROOT
-where python
-where pip
-set
 git clone https://github.com/scipy/scipy.git
 cd scipy
 git checkout %SCIPY_COMMIT%
