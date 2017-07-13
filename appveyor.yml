@@ -41,6 +41,7 @@ build_script:
   - call build_script.bat
 
 test_script:
+  - call pre_test.bat
   # Run the project tests
   - python -c "import scipy; scipy.test(verbose=3)"
   - cd ..

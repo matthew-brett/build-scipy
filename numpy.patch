@@ -15,7 +15,7 @@
 -                    return []
 -                else:
 -                    pass
-+                return []
++                return ['gcc', 'gfortran']
          return opt
  
      def get_target(self):
