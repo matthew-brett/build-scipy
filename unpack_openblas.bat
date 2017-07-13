@@ -9,5 +9,5 @@ if not exist "%OPENBLAS_ROOT%" mkdir %OPENBLAS_ROOT%
 cd %OPENBLAS_ROOT%
 set OPENBLAS_FNAME=openblas-%OPENBLAS_COMMIT%_win%PYTHON_ARCH%.zip
 %MSYS2_ROOT%\usr\bin\pacman -Sy --noconfirm curl unzip
-%MSYS2_ROOT%\usr\bin\curl -L %RACK_URL%/%OPENBLAS_FNAME% -o %OPENBLAS_FNAME%
+%MSYS2_ROOT%\usr\bin\curl -L "%RACK_URL%/%OPENBLAS_FNAME%" -o %OPENBLAS_FNAME%
 %MSYS2_ROOT%\usr\bin\unzip -o %OPENBLAS_FNAME%
