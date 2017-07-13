@@ -12,4 +12,6 @@ if [%PYTHON_ARCH%]==[64] (
 )
 set PATH=%MINGW_PYTHON%\Scripts;%PATH%
 %MINGW_PYTHON%\Scripts\pip.exe install -i https://pypi.anaconda.org/carlkl/simple mingwpy
+where gcc
+gcc --print-file specs
 cmd /c run_bash patch_mingwpy.sh
