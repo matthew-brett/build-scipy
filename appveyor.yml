@@ -26,48 +26,16 @@ environment:
     # - PYTHON: C:\Python36
 
 install:
-  # Get Python bitness
-  # https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-variable-from-command-output#4509885
-  - set PY_CMD=%PYTHON%\Python.exe -c "import platform; print(platform.architecture()[0][:2])"
-  - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
-
-  # Fix MSVC builds for 64-bit Python
-  # See
+  # Fix MSVC builds for 64-bit Python; see:
   # http://stackoverflow.com/questions/32091593/cannot-install-windows-sdk-7-1-on-windows-10
   - echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64/vcvars64.bat"
-
-  # Install mingwpy into matching bitness Python 2.7, patch, put on PATH
-  - install_mingwpy.bat
-
-  # Put the building Python on the path
-  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
-
-  # Download built openblas libraries
-  - cmd /c unpack_openblas.bat
-
-  # The normal scipy build
-  - python -m pip install --upgrade pip
-  # OpenBLAS numpy wheels
-  - pip install --no-index -f %OPENBLAS_WHEEL_URL% numpy
-  # Patch numpy distutils
-  - bash patch_numpy.sh
-
-  - pip install delocate cython
-
+  - install_script.bat
   # Pin wheel to 0.26 to avoid Windows ABI tag for built wheel
   - pip install wheel==0.26
-  - git clone https://github.com/scipy/scipy.git
 
 build_script:
   # Build and install the wheel
-  - cd scipy
-  - git checkout %SCIPY_COMMIT%
-  - python ..\build_scipy.py . %PYTHON_ARCH% %OPENBLAS_ROOT%
-  - cd dist
-  - pip install --pre --no-index -f . scipy
-  - pip install nose
-  # Delete the original libraries to check import of vendored libs
-  - rmdir /s /q %OPENBLAS_ROOT%\%PYTHON_ARCH%
+  - build_script.bat
 
 test_script:
   # Run the project tests
