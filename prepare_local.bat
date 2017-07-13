@@ -6,3 +6,4 @@ set OPENBLAS_WHEEL_URL=https://6faba06bebdc7f28a358-9ba0e05766e4bd68e53ad28ecdbf
 set PYTHON=C:\Python361-64
 set PYMW_32=C:\Python27
 set PYMW_64=C:\Python27-64
+set MSYS2_ROOT=C:\msys64

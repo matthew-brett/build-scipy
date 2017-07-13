@@ -10,6 +10,7 @@ environment:
       OPENBLAS_WHEEL_URL: https://6faba06bebdc7f28a358-9ba0e05766e4bd68e53ad28ecdbfcaa7.ssl.cf2.rackcdn.com
       PYMW_32: C:\Python27
       PYMW_64: C:\Python27-x64
+      MSYS2_ROOT: c:\msys64
       WHEELHOUSE_UPLOADER_USERNAME: travis-worker
       # This the key for matthew-brett
       WHEELHOUSE_UPLOADER_SECRET:

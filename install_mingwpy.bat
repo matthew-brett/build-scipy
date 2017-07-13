@@ -3,6 +3,7 @@ REM Expects (default)
 REM    PYTHON_ARCH: 64 or 32
 REM    PYMW_64: c:\Python27-64
 REM    PYMW_32: c:\Python27
+REM    MSYS2_ROOT: c:\msys64
 REM install and patch mingwpy
 if [%PYTHON_ARCH%]==[64] (
     set MINGW_PYTHON=%PYMW_64%
@@ -11,4 +12,4 @@ if [%PYTHON_ARCH%]==[64] (
 )
 set PATH=%MINGW_PYTHON%\Scripts;%PATH%
 %MINGW_PYTHON%\Scripts\pip.exe install -i https://pypi.anaconda.org/carlkl/simple mingwpy
-bash patch_mingwpy.sh
+%MSYS2_ROOT%\usr\bin\bash patch_mingwpy.sh
