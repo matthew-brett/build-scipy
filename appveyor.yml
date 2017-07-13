@@ -29,13 +29,13 @@ install:
   # Fix MSVC builds for 64-bit Python; see:
   # http://stackoverflow.com/questions/32091593/cannot-install-windows-sdk-7-1-on-windows-10
   - echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64/vcvars64.bat"
-  - install_script.bat
+  - call install_script.bat
   # Pin wheel to 0.26 to avoid Windows ABI tag for built wheel
   - pip install wheel==0.26
 
 build_script:
   # Build and install the wheel
-  - build_script.bat
+  - call build_script.bat
 
 test_script:
   # Run the project tests
