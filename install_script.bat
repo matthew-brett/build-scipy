@@ -17,8 +17,10 @@ REM Update pip, virtualenv
 %PYTHON%\Python.exe -m pip install --upgrade pip
 %PYTHON%\Python.exe -m pip install --upgrade virtualenv
 REM Build in virtualenv
+if exist venv (rmdir /s /q venv)
 %PYTHON%\Scripts\virtualenv venv
 venv\Scripts\activate.bat
+where python
 REM OpenBLAS numpy wheels
 pip install --no-index -f %OPENBLAS_WHEEL_URL% numpy
 REM Patch numpy distutils
