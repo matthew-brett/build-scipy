@@ -23,6 +23,7 @@ call venv\Scripts\activate.bat
 REM OpenBLAS numpy wheels
 pip install --no-index -f %OPENBLAS_WHEEL_URL% numpy
 REM Patch numpy distutils
+%MSYS2_ROOT%\usr\bin\pacman -Sy --noconfirm patch
 %MSYS2_ROOT%\usr\bin\bash patch_numpy.sh
 REM Other build dependencies
 pip install delocate cython
