@@ -15,15 +15,15 @@ environment:
 
     matrix:
 
-    - PYTHON: C:\Python27
-      NP_VER: 1.10.4
+    # - PYTHON: C:\Python27
     # - PYTHON: C:\Python27-x64
     # - PYTHON: C:\Python34
     # - PYTHON: C:\Python34-x64
     # - PYTHON: C:\Python35
     # - PYTHON: C:\Python35-x64
     # - PYTHON: C:\Python36
-    # - PYTHON: C:\Python36-x64
+      - PYTHON: C:\Python36-x64
+    # - PYTHON: C:\Python36
 
 install:
   # Get Python bitness
