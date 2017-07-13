@@ -8,9 +8,9 @@ REM https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-
 set PY_CMD=%PYTHON%\Python.exe -c "import platform; print(platform.architecture()[0][:2])"
 for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
 REM Make sure we have patch installed
-%MSYS2_ROOT%\usr\bin\pacman -Sy --noconfirm patch
+cmd /c run_bash -c "pacman -Sy --noconfirm patch"
 REM Make sure we're not picking up msys64 gcc
-%MSYS2_ROOT%\usr\bin\pacman -Rs --noconfirm gcc gcc-fortran
+cmd /c run_bash -c "pacman -Rs --noconfirm gcc gcc-fortran"
 REM Install mingwpy into matching bitness Python 2.7, patch, put on PATH
 call install_mingwpy.bat
 REM Put the building Python on the path
