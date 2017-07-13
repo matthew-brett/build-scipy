@@ -8,6 +8,8 @@ environment:
       OPENBLAS_COMMIT: v0.2.19
       OPENBLAS_ROOT: c:\opt
       OPENBLAS_WHEEL_URL: https://6faba06bebdc7f28a358-9ba0e05766e4bd68e53ad28ecdbfcaa7.ssl.cf2.rackcdn.com
+      PYMW_32: C:\Python27
+      PYMW_64: C:\Python27-x64
       WHEELHOUSE_UPLOADER_USERNAME: travis-worker
       # This the key for matthew-brett
       WHEELHOUSE_UPLOADER_SECRET:
