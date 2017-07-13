@@ -6,5 +6,6 @@ specs_dir=$(dirname $(gcc --print-file specs))
 (cd ${specs_dir} && \
     patch -p0 < $patch_file && \
     cp libgfortran.a gfortran.lib && \
+    cp libquadmath.a quadmath.lib && \
     cp libgcc.a gcc.lib)
 gcc -dumpspecs

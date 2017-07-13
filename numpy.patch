@@ -15,7 +15,7 @@
 -                    return []
 -                else:
 -                    pass
-+                return ['gcc', 'gfortran']
++                return ['gcc', 'gfortran', 'quadmath']
          return opt
  
      def get_target(self):
