@@ -15,7 +15,9 @@
 -                    return []
 -                else:
 -                    pass
-+                return ['gcc', 'gfortran', 'quadmath']
++                return ['mingw32', 'mingwex', 'gcc', 'gfortran',
++                        'quadmath']
+
          return opt
  
      def get_target(self):
