@@ -1,6 +1,6 @@
---- distutils/fcompiler/gnu.py.old	2017-07-13 00:26:25.000000000 +0100
-+++ distutils/fcompiler/gnu.py	2017-07-13 00:30:18.000000000 +0100
-@@ -333,17 +333,7 @@
+--- distutils/fcompiler/gnu.py.old	2017-07-14 10:01:26.000000000 +0100
++++ distutils/fcompiler/gnu.py	2017-07-14 10:05:38.000000000 +0100
+@@ -333,17 +333,11 @@
          if sys.platform == 'win32':
              c_compiler = self.c_compiler
              if c_compiler and c_compiler.compiler_type == "msvc":
@@ -15,9 +15,11 @@
 -                    return []
 -                else:
 -                    pass
-+                return ['mingw32', 'mingwex', 'gcc', 'gfortran',
-+                        'quadmath']
-
++                libs = ['mingw32', 'mingwex', 'gcc', 'gfortran', 'quadmath']
++                if sys.version_info[:2] >= (3, 5):
++                    # https://msdn.microsoft.com/en-us/library/bb531344.aspx#BK_CRT
++                    libs.append('legacy_stdio_definitions')
++                return libs
          return opt
  
      def get_target(self):
