@@ -18,7 +18,7 @@
 +                libs = ['mingw32', 'mingwex', 'gcc', 'gfortran', 'quadmath']
 +                if sys.version_info[:2] >= (3, 5):
 +                    # https://msdn.microsoft.com/en-us/library/bb531344.aspx#BK_CRT
-+                    libs.append('legacy_stdio_definitions')
++                    libs += ['legacy_stdio_definitions', 'iob_hack']
 +                return libs
          return opt
  
